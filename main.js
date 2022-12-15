@@ -53,3 +53,15 @@ function isWin(playerTable){
     }
     return false;
 }
+
+/*
+* 関数名 　　　　       ： nextPlayerTurn
+* 内容   　　　　       : 次のplayerのターンに切り替える
+* 引数(str型)          : playerTurn
+* 戻り値(str型)        : "X's Turn" or "O's Turn"
+*/
+function nextPlayerTurn(playerTurn){
+    const currPlayer = playerTurn.substring(0,1);
+    const nextPlayer = currPlayer === "O" ? "X" : "O";
+    return nextPlayer + "'s Turn";
+}
