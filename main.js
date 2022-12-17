@@ -84,6 +84,43 @@ function init(){
 
 }
 
+/*
+* 関数名 　　　　       ： handleClickStart
+* 内容   　　　　       : イベントハンドラ
+* 引数                 : e,index
+* 戻り値(void)     :
+*/
+function handleClickStart(e,index){
+    /* X or O を入れる */
+    game.setGameBoard(index,game.currentPlayer);
+
+    /* clickしたbutton_classのunsetを削除する */
+    e.target.classList.remove("unset");
+
+    /* 勝敗がついたかを確認する */
+    const clickedState = winnerTicTacToe(game.getGameBoard);
+ 
+    if(clickedState === "game continue"){
+        /* プレイヤーの変更 */
+        geme.togglePlayer();
+
+        const gameboard = document.querySelectorAll(".button-option");
+        /* classがunsetのものをtogglePlayerの値に変える */
+        gameboard.forEach((cell) => {
+            if(cell.classList.contains("unset")){
+            cell.innerHTML = game.currentPlayer;
+            }
+        })
+    }
+    else{
+        /* ゲーム終了画面の表示する関数に移動する */
+
+    }
+
+    /* 設定したイベントリスナーを解除する */
+    e.target.removeEventListener("click",handleClickStart);
+}
+
 
 
 init();
