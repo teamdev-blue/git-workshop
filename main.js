@@ -10,16 +10,7 @@ function winnerTicTacToe(table){
     let indexArr_X = [];
     let count = 0;
 
-    const winnerTable = [
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [2,4,6]
-    ];
+    
 
     // for each文
     for(let i = 0;i < table.length;i++){
@@ -46,6 +37,16 @@ function winnerTicTacToe(table){
 * 戻り値(boolean型)    : True or False
 */
 function isWin(playerTable){
+    const winnerTable = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
+    ];
     for(element of winnerTable){
       if(playerTable.filter(value => element.includes(value)).length >= 3){
         return true;
@@ -81,6 +82,44 @@ function init(){
         cell.innerHTML = game.currentPlayer;
     });
 
+}
+
+/*
+* 関数名 　　　　       ： handleClickStart
+* 内容   　　　　       : イベントハンドラ
+* 引数                 : e,index
+* 戻り値(void)     :
+*/
+function handleClickStart(e,index){
+    /* X or O を入れる */
+    game.setGameBoard(index,game.currentPlayer);
+
+    /* clickしたbutton_classのunsetを削除する */
+    e.target.classList.remove("unset");
+
+    /* 勝敗がついたかを確認する */
+    const clickedState = winnerTicTacToe(game.gameBoard);
+ 
+    if(clickedState === "game continue"){
+        /* プレイヤーの変更 */
+        game.togglePlayer();
+
+        const gameboard = document.querySelectorAll(".button-option");
+        /* classがunsetのものをtogglePlayerの値に変える */
+        gameboard.forEach((cell) => {
+            if(cell.classList.contains("unset")){
+            cell.innerHTML = game.currentPlayer;
+            }
+        })
+    }
+    else{
+        /* ゲーム終了画面の表示する関数に移動する */
+
+    }
+
+    /* Todo イベントリスナーが削除できない*/
+    /* 設定したイベントリスナーを解除する */
+    e.target.removeEventListener("click",{index : index, handleEvent: handleClickStart});
 }
 
 class Game{
