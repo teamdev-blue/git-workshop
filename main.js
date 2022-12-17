@@ -75,15 +75,39 @@ function nextPlayerTurn(playerTurn){
 
 function init(){
     const gameboard = document.querySelectorAll(".button-option");
-    console.log(gameboard);
-    gameboard.forEach((cell) => {
-        cell.addEventListener("click",handleClickStart);
+    gameboard.forEach((cell,index) => {
+        cell.addEventListener("click",{index : index, handleEvent: handleClickStart});
         cell.classList.add("unset");
-        cell.innerHTML = "X";
+        cell.innerHTML = game.currentPlayer;
     });
 
 }
 
+class Game{
+    #currentPlayer;
+    #gameBoard;
+    constructor(){
+        this.#currentPlayer = "X";
+        this.#gameBoard = [null,null,null,null,null,null,null,null,null];
+    }
+    togglePlayer(){
+        this.#currentPlayer = this.#currentPlayer === "O" ? "X" : "O";
+    }
 
+    get currentPlayer() {
+        return this.#currentPlayer;
+    }
 
+    get gameBoard(){
+        return this.#gameBoard;
+    }
+
+    setGameBoard(index,sign){
+        if(index > 8 || index < 0) throw new Error("index out of range");
+        if(sign !== "O" && sign !== "X") throw new Error("bad value");
+        this.#gameBoard[index] = sign
+    }
+}
+
+const game = new Game();
 init();
