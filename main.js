@@ -65,3 +65,25 @@ function nextPlayerTurn(playerTurn){
     const nextPlayer = currPlayer === "O" ? "X" : "O";
     return nextPlayer + "'s Turn";
 }
+
+/*
+* 関数名 　　　　       ： init
+* 内容   　　　　       : gameの初期設定
+* 引数(void)           : 
+* 戻り値(undefined)     :
+*/
+
+function init(){
+    const gameboard = document.querySelectorAll(".button-option");
+    console.log(gameboard);
+    gameboard.forEach((cell) => {
+        cell.addEventListener("click",handleClickStart);
+        cell.classList.add("unset");
+        cell.innerHTML = "X";
+    });
+
+}
+
+
+
+init();
