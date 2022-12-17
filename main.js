@@ -4,15 +4,11 @@
 * 引数(1次元配列)   : table
 * 戻り値(str型)    : "X's Wins!!!" or "O's Wins!!!" or "Draw!" or "game continue"
 */
-
 function winnerTicTacToe(table){
     let indexArr_O = [];
     let indexArr_X = [];
     let count = 0;
 
-    
-
-    // for each文
     for(let i = 0;i < table.length;i++){
         if(table[i] === "O"){
             indexArr_O.push(i);
@@ -55,14 +51,12 @@ function isWin(playerTable){
     return false;
 }
 
-
 /*
 * 関数名 　　　　       ： init
 * 内容   　　　　       : gameの初期設定
 * 引数(void)           : 
 * 戻り値(undefined)     :
 */
-
 function initGameBoard(){
     document.querySelector(".popup").classList.add("hide");
     game.init();
@@ -106,6 +100,7 @@ function handleClickStart(e){
         /* ゲーム終了画面の表示する関数に移動する */
         let gameSetElement = document.querySelector(".popup.hide");
         gameSetElement.classList.remove("hide");
+        document.getElementById("message").innerHTML = clickedState;
     }
 }
 
