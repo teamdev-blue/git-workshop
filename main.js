@@ -15,11 +15,11 @@ function winnerTicTacToe(table){
     // for each文
     for(let i = 0;i < table.length;i++){
         if(table[i] === "O"){
-            indexArr_O.append(i);
+            indexArr_O.push(i);
             count++;
         }
         else if(table[i] === "X"){
-            indexArr_X.append(i);
+            indexArr_X.push(i);
             count++;
         }
     }
@@ -63,10 +63,11 @@ function isWin(playerTable){
 * 戻り値(undefined)     :
 */
 
-function init(){
+function initGameBoard(){
+    document.querySelector(".popup").classList.add("hide");
+    game.init();
     const gameboard = document.querySelectorAll(".button-option");
-    gameboard.forEach((cell,index) => {
-        cell.addEventListener("click",{index : index, handleEvent: handleClickStart});
+    gameboard.forEach((cell) => {
         cell.classList.add("unset");
         cell.innerHTML = game.currentPlayer;
     });
@@ -79,19 +80,19 @@ function init(){
 * 引数                 : e,index
 * 戻り値(void)     :
 */
-function handleClickStart(e,index){
+function handleClickStart(e){
     /* X or O を入れる */
-    game.setGameBoard(index,game.currentPlayer);
-
+    game.setGameBoard(this.index,game.currentPlayer);//押したときのplayer
+    console.log(game.gameBoard);
+    if(e.target.classList.contains("unset"))game.togglePlayer();
     /* clickしたbutton_classのunsetを削除する */
     e.target.classList.remove("unset");
 
     /* 勝敗がついたかを確認する */
     const clickedState = winnerTicTacToe(game.gameBoard);
- 
+    console.log(clickedState);
     if(clickedState === "game continue"){
         /* プレイヤーの変更 */
-        game.togglePlayer();
 
         const gameboard = document.querySelectorAll(".button-option");
         /* classがunsetのものをtogglePlayerの値に変える */
@@ -103,20 +104,16 @@ function handleClickStart(e,index){
     }
     else{
         /* ゲーム終了画面の表示する関数に移動する */
-
+        let gameSetElement = document.querySelector(".popup.hide");
+        gameSetElement.classList.remove("hide");
     }
-
-    /* Todo イベントリスナーが削除できない*/
-    /* 設定したイベントリスナーを解除する */
-    e.target.removeEventListener("click",{index : index, handleEvent: handleClickStart});
 }
 
 class Game{
     #currentPlayer;
     #gameBoard;
     constructor(){
-        this.#currentPlayer = "X";
-        this.#gameBoard = [null,null,null,null,null,null,null,null,null];
+        this.init();
     }
     togglePlayer(){
         this.#currentPlayer = this.#currentPlayer === "O" ? "X" : "O";
@@ -135,6 +132,20 @@ class Game{
         if(sign !== "O" && sign !== "X") throw new Error("bad value");
         this.#gameBoard[index] = sign
     }
+    init(){
+        this.#currentPlayer = "X";
+        this.#gameBoard = [null,null,null,null,null,null,null,null,null];
+    }
+}
+
+function init(){
+    const gameboard = document.querySelectorAll(".button-option");
+    gameboard.forEach((cell,index) => {
+        cell.addEventListener("click",{index : index, handleEvent: handleClickStart});
+    });
+    document.getElementById("restart").addEventListener("click",initGameBoard);
+    document.getElementById("new-game").addEventListener("click",initGameBoard);
+    initGameBoard();
 }
 
 const game = new Game();
