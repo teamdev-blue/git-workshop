@@ -15,11 +15,11 @@ function winnerTicTacToe(table){
     // for each文
     for(let i = 0;i < table.length;i++){
         if(table[i] === "O"){
-            indexArr_O.append(i);
+            indexArr_O.push(i);
             count++;
         }
         else if(table[i] === "X"){
-            indexArr_X.append(i);
+            indexArr_X.push(i);
             count++;
         }
     }
