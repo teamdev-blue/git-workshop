@@ -74,4 +74,11 @@
   .popup.hide {
     display: none;
   }
-  
+  .unset{
+    /*文字の非表示*/
+    font-size: 0;
+  }
+  .unset:hover{
+    font-size: 12vmin;
+    color:rgba(209,97,255,0.3);
+  }
